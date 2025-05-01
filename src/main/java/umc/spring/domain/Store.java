@@ -1,0 +1,41 @@
+package umc.spring.domain;
+
+import jakarta.persistence.*;
+import lombok.*;
+import umc.spring.domain.common.BaseEntity;
+import umc.spring.domain.mapping.StoreCategory;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Getter
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+public class Store extends BaseEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, length = 15)
+    private String name;
+
+    @Column(nullable = false, length = 20)
+    private String location;
+
+    @Column(length = 100)
+    private String info;
+
+    @OneToMany(mappedBy = "store")
+    private List<Mission> missionList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "store")
+    private List<Review> reviewList = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private StoreCategory category;
+
+}
