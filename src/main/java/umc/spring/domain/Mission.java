@@ -19,11 +19,13 @@ public class Mission extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String mission_spec;
+
     @Column(nullable = false)
     private int point;
 
     @Column(nullable = false)
-    private int required_price;
+    private int requiredPrice;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "store_id")

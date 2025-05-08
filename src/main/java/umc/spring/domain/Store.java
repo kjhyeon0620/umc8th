@@ -25,6 +25,8 @@ public class Store extends BaseEntity {
     @Column(nullable = false, length = 20)
     private String location;
 
+    private Float score;
+
     @Column(length = 100)
     private String info;
 
@@ -38,4 +40,13 @@ public class Store extends BaseEntity {
     @JoinColumn(name = "category_id")
     private StoreCategory category;
 
+    @Override
+    public String toString() {
+        return "Store{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", location='" + location + '\'' +
+                ", score=" + score +
+                '}';
+    }
 }
