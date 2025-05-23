@@ -27,6 +27,15 @@ import java.util.Optional;
 public class ExceptionAdvice extends ResponseEntityExceptionHandler {
 
 
+//    @ExceptionHandler
+//    public ResponseEntity<Object> validation(ConstraintViolationException e, WebRequest request) {
+//        String errorMessage = e.getConstraintViolations().stream()
+//                .map(constraintViolation -> constraintViolation.getMessage())
+//                .findFirst()
+//                .orElseThrow(() -> new RuntimeException("ConstraintViolationException 추출 도중 에러 발생"));
+//
+//        return handleExceptionInternalConstraint(e, ErrorStatus.valueOf(errorMessage), HttpHeaders.EMPTY,request);
+//    }
     @ExceptionHandler
     public ResponseEntity<Object> validation(ConstraintViolationException e, WebRequest request) {
         String errorMessage = e.getConstraintViolations().stream()
@@ -38,6 +47,10 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
     }
 
     @Override
+    public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException e,
+                                                               HttpHeaders headers,
+                                                               HttpStatusCode status,
+                                                               WebRequest request) {
     public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException e, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 
         Map<String, String> errors = new LinkedHashMap<>();
@@ -116,4 +129,29 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
                 request
         );
     }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<Object> handleConstraintViolationException(
+            ConstraintViolationException ex,
+            WebRequest request) {
+
+        Map<String, String> errors = new LinkedHashMap<>();
+
+        ex.getConstraintViolations().forEach(violation -> {
+            String propertyPath = violation.getPropertyPath().toString();
+            String field = propertyPath.substring(propertyPath.lastIndexOf('.') + 1);
+            String message = Optional.ofNullable(violation.getMessage()).orElse("잘못된 입력입니다.");
+
+            errors.merge(field, message, (existing, newMsg) -> existing + ", " + newMsg);
+        });
+
+        return handleExceptionInternalArgs(
+                ex,
+                HttpHeaders.EMPTY,
+                ErrorStatus._BAD_REQUEST,
+                request,
+                errors
+        );
+    }
+
 }

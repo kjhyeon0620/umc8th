@@ -18,13 +18,9 @@ public class QStore extends EntityPathBase<Store> {
 
     private static final long serialVersionUID = 1158464437L;
 
-    private static final PathInits INITS = PathInits.DIRECT2;
-
     public static final QStore store = new QStore("store");
 
     public final umc.spring.domain.common.QBaseEntity _super = new umc.spring.domain.common.QBaseEntity(this);
-
-    public final umc.spring.domain.mapping.QStoreCategory category;
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
@@ -43,28 +39,21 @@ public class QStore extends EntityPathBase<Store> {
 
     public final NumberPath<Float> score = createNumber("score", Float.class);
 
+    public final ListPath<umc.spring.domain.mapping.StoreCategory, umc.spring.domain.mapping.QStoreCategory> storeCategoryList = this.<umc.spring.domain.mapping.StoreCategory, umc.spring.domain.mapping.QStoreCategory>createList("storeCategoryList", umc.spring.domain.mapping.StoreCategory.class, umc.spring.domain.mapping.QStoreCategory.class, PathInits.DIRECT2);
+
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
 
     public QStore(String variable) {
-        this(Store.class, forVariable(variable), INITS);
+        super(Store.class, forVariable(variable));
     }
 
     public QStore(Path<? extends Store> path) {
-        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
+        super(path.getType(), path.getMetadata());
     }
 
     public QStore(PathMetadata metadata) {
-        this(metadata, PathInits.getFor(metadata, INITS));
-    }
-
-    public QStore(PathMetadata metadata, PathInits inits) {
-        this(Store.class, metadata, inits);
-    }
-
-    public QStore(Class<? extends Store> type, PathMetadata metadata, PathInits inits) {
-        super(type, metadata, inits);
-        this.category = inits.isInitialized("category") ? new umc.spring.domain.mapping.QStoreCategory(forProperty("category")) : null;
+        super(Store.class, metadata);
     }
 
 }

@@ -8,6 +8,7 @@ import umc.spring.domain.common.BaseEntity;
 import umc.spring.domain.enums.MissionState;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -31,5 +32,16 @@ public class MissionMember extends BaseEntity {
     @JoinColumn(name = "mission_id")
     private Mission mission;
 
+    private LocalDateTime completedAt;
+
+    public void setMember(Member member) {
+        this.member = member;
+        member.getMissionMemberList().add(this);
+    }
+
+    public void setMission(Mission mission) {
+        this.mission = mission;
+        mission.getMissionMemberList().add(this);
+    }
     private LocalDate completedAt;
 }

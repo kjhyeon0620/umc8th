@@ -35,6 +35,8 @@ public class QMember extends EntityPathBase<Member> {
 
     public final DatePath<java.time.LocalDate> inactivateDate = createDate("inactivateDate", java.time.LocalDate.class);
 
+    public final ListPath<umc.spring.domain.mapping.MemberPrefer, umc.spring.domain.mapping.QMemberPrefer> memberPreferList = this.<umc.spring.domain.mapping.MemberPrefer, umc.spring.domain.mapping.QMemberPrefer>createList("memberPreferList", umc.spring.domain.mapping.MemberPrefer.class, umc.spring.domain.mapping.QMemberPrefer.class, PathInits.DIRECT2);
+
     public final ListPath<umc.spring.domain.mapping.MissionMember, umc.spring.domain.mapping.QMissionMember> missionMemberList = this.<umc.spring.domain.mapping.MissionMember, umc.spring.domain.mapping.QMissionMember>createList("missionMemberList", umc.spring.domain.mapping.MissionMember.class, umc.spring.domain.mapping.QMissionMember.class, PathInits.DIRECT2);
 
     public final StringPath name = createString("name");
@@ -48,8 +50,6 @@ public class QMember extends EntityPathBase<Member> {
     public final BooleanPath phoneVerified = createBoolean("phoneVerified");
 
     public final NumberPath<Integer> point = createNumber("point", Integer.class);
-
-    public final StringPath preference = createString("preference");
 
     public final ListPath<Review, QReview> reviewList = this.<Review, QReview>createList("reviewList", Review.class, QReview.class, PathInits.DIRECT2);
 

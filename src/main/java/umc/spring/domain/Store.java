@@ -36,9 +36,8 @@ public class Store extends BaseEntity {
     @OneToMany(mappedBy = "store")
     private List<Review> reviewList = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
-    private StoreCategory category;
+    @OneToMany(mappedBy = "store")
+    private List<StoreCategory> storeCategoryList = new ArrayList<>();
 
     @Override
     public String toString() {

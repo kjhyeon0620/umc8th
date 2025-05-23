@@ -18,6 +18,8 @@ public class QStoreCategory extends EntityPathBase<StoreCategory> {
 
     private static final long serialVersionUID = 259587763L;
 
+    private static final PathInits INITS = PathInits.DIRECT2;
+
     public static final QStoreCategory storeCategory = new QStoreCategory("storeCategory");
 
     public final umc.spring.domain.common.QBaseEntity _super = new umc.spring.domain.common.QBaseEntity(this);
@@ -25,25 +27,35 @@ public class QStoreCategory extends EntityPathBase<StoreCategory> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
+    public final umc.spring.domain.QFoodCategory foodCategory;
+
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final ListPath<umc.spring.domain.Store, umc.spring.domain.QStore> storeList = this.<umc.spring.domain.Store, umc.spring.domain.QStore>createList("storeList", umc.spring.domain.Store.class, umc.spring.domain.QStore.class, PathInits.DIRECT2);
-
-    public final EnumPath<umc.spring.domain.enums.FoodCategory> type = createEnum("type", umc.spring.domain.enums.FoodCategory.class);
+    public final umc.spring.domain.QStore store;
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
 
     public QStoreCategory(String variable) {
-        super(StoreCategory.class, forVariable(variable));
+        this(StoreCategory.class, forVariable(variable), INITS);
     }
 
     public QStoreCategory(Path<? extends StoreCategory> path) {
-        super(path.getType(), path.getMetadata());
+        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
     public QStoreCategory(PathMetadata metadata) {
-        super(StoreCategory.class, metadata);
+        this(metadata, PathInits.getFor(metadata, INITS));
+    }
+
+    public QStoreCategory(PathMetadata metadata, PathInits inits) {
+        this(StoreCategory.class, metadata, inits);
+    }
+
+    public QStoreCategory(Class<? extends StoreCategory> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.foodCategory = inits.isInitialized("foodCategory") ? new umc.spring.domain.QFoodCategory(forProperty("foodCategory")) : null;
+        this.store = inits.isInitialized("store") ? new umc.spring.domain.QStore(forProperty("store")) : null;
     }
 
 }
