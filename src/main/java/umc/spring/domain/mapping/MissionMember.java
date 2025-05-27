@@ -43,5 +43,4 @@ public class MissionMember extends BaseEntity {
         this.mission = mission;
         mission.getMissionMemberList().add(this);
     }
-    private LocalDate completedAt;
 }
