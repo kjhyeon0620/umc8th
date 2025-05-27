@@ -1,6 +1,8 @@
 package umc.spring.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import umc.spring.apiPayload.code.status.ErrorStatus;
@@ -53,5 +55,16 @@ public class MissionCommandServiceImpl implements MissionCommandService{
         newMissionMember.setMission(mission);
 
         return missionMemberRepository.save(newMissionMember);
+    }
+
+    @Override
+    public Page<Mission> getMissionList(Long storeId, Integer page) {
+        Store store = storeRepository.findById(storeId).get();
+        return missionRepository.findAllByStore(store, PageRequest.of(page, 10));
+    }
+
+    @Override
+    public Page<MissionMember> getMissionListWithMember(Long memberId, MissionState missionState, Integer page) {
+        return missionMemberRepository.findAllByMemberIdAndState(memberId, missionState, PageRequest.of(page, 10));
     }
 }

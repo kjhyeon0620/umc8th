@@ -19,7 +19,7 @@ public class Mission extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String mission_spec;
+    private String missionSpec;
 
     @Column(nullable = false)
     private int point;

@@ -1,6 +1,8 @@
 package umc.spring.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import umc.spring.apiPayload.code.status.ErrorStatus;
@@ -35,5 +37,20 @@ public class ReviewCommandServiceImpl implements ReviewCommandService{
         newReview.setStore(store);
 
         return reviewRepository.save(newReview);
+    }
+
+    @Override
+    public Page<Review> getReviewList(Long storeId, Integer page) {
+        Store store = storeRepository.findById(storeId).get();
+
+        return reviewRepository.findAllByStore(store, PageRequest.of(page, 10));
+    }
+
+    @Override
+    public Page<Review> getMyReviewList(Long memberId, Long storeId, Integer page) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new TempHandler(ErrorStatus.MEMBER_NOT_FOUND));
+        Store store = storeRepository.findById(storeId).get();
+        return reviewRepository.findAllByMemberAndStore(member, store, PageRequest.of(page, 10));
     }
 }
