@@ -32,8 +32,27 @@ public class MemberConverter {
                 .nickname(request.getNickname())
                 .gender(gender)
                 .email(request.getEmail())
+                .role(request.getRole())
                 .phoneNumber(request.getPhoneNumber())
+                .birthYear(request.getBirthYear())
+                .birthMonth(request.getBirthMonth())
+                .birthDay(request.getBirthDay())
                 .memberPreferList(new ArrayList<>())
+                .build();
+    }
+
+    public static MemberResponseDTO.LoginResultDTO toLoginResultDTO(Long id, String accessToken) {
+        return MemberResponseDTO.LoginResultDTO.builder()
+                .memberId(id)
+                .accessToken(accessToken)
+                .build();
+    }
+
+    public static MemberResponseDTO.MemberInfoDTO toMemberInfoDTO(Member member) {
+        return MemberResponseDTO.MemberInfoDTO.builder()
+                .name(member.getName())
+                .username(member.getUsername())
+                .gender(member.getGender().name())
                 .build();
     }
 

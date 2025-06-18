@@ -38,7 +38,12 @@ public enum ErrorStatus implements BaseErrorCode {
     ALREADY_CHALLENGED_MISSION(HttpStatus.CONFLICT, "MISSION4002", "이미 도전중인 미션입니다."),
 
     // 페이지 관련 에러
-    PAGE_PARAM_INVALID(HttpStatus.BAD_REQUEST, "PAGE4001", "페이지 값은 1 이상이어야 합니다.");
+    PAGE_PARAM_INVALID(HttpStatus.BAD_REQUEST, "PAGE4001", "페이지 값은 1 이상이어야 합니다."),
+
+    // 인증 관련 에러
+    INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "MEMBER4003", "유효하지 않은 토큰입니다."),
+    INVALID_PASSWORD(HttpStatus.BAD_REQUEST, "MEMBER4004", "비밀번호가 틀렸습니다.");
+
 
     private final HttpStatus httpStatus;
     private final String code;
